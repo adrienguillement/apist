@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: npm run dev
+    volumes:
+      - .:/app/
+      - /app/nodes-modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      DATABASE_HOST: mongo://apistuser@postgres/apist
+  
+  mongo:
+    image: mongo:3-xenial
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: apist
+      MONGO_INITDB_ROOT_PASSWORD: apist
